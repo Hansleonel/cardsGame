@@ -45,7 +45,9 @@ crearDeck();
 
 const pedirCarta = () => {
 
-  if(deck.length===0){
+  if (deck.length === 0) {
+    // el codigo que continue a "throw" no podra ejecutarse, en este caso a mens de que no cumpla
+    // con el if condicionl
     throw 'Error, no hay carts en el deck';
   }
   // el metodo pop() prestablecido de JS nos permite extraer el ultimo elemento de un arreglo
@@ -55,6 +57,58 @@ const pedirCarta = () => {
   let carta = deck.pop();
   console.log(deck);
   console.log(carta);
+  // retnr la carta
+  return carta;
 };
-pedirCarta();
+
+// pedirCarta();
+
+// funcion para obtener el valor de la carta
+const valorCarta1 = ( carta ) => {
+  // como sabemos debemos de manejar la variable "carta" recibida en el metodo
+  // como un String, es por eso que podemos usar funciones predeterminadas en JS
+  // como ".substring(posicionInicial, posicionFnl)"
+  // si enviamos el valor de la carta "2D" nos devolera 2
+  // si enviamos 10S nos devolera 10, dicho esto devemos de tener en cuenta
+  // que dicho valor seguira siendo un string
+  const valor = carta.substring(0, carta.length - 1);
+  let puntos = 0;
+
+  // para poder determinar si un string puede ser un no number podemos
+  // usar la funcion prederterminada de JS "isNaN"
+  if (isNaN(valor)) {
+    console.log("no es un number");
+
+    // como sabemos solo cartas del tipo JD, AS, entre otras
+    // cumplen con la condicion de la funcion predeterminada de JS
+    // "isNaN" es por eso que debemos de añadir una nueva condicion
+    // recordemos que en este game las letras J,Q,K tienen el valor de 10
+    // y el valor para la letra A es 11, es por eso que debemos de usar
+    // la siguiente condicion
+    puntos = ( valor === 'A') ? 11 : 10;
+
+  } else {
+    console.log("si es un number");
+    // como mencionamos previamente el valor de "valor"
+    // seguira siendo del tipo String para solucionar este problema
+    // luego de determinar que si puede contener un number con la condicional
+    // y la funcion "isNaN", la forma mas simpliciada seria ser multplicar "valor"
+    // por 1
+    puntos = valor * 1;
+  }
+
+  console.log(puntos);
+
+}
+
+// forma simplificada de la funcion que se encuentra en la parte superior
+const valorCarta = ( carta )=> {
+  const valor = carta.substring(0, carta.length-1);
+  return ( isNaN(valor)  ) ?
+         ( valor === 'A' ) ? 11 : 10
+         : valor * 1;
+}
+
+const valor = valorCarta( pedirCarta() );
+console.log({ valor });
 
