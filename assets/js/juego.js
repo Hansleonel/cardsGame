@@ -9,6 +9,15 @@ let deck = [];
 const tipos = ["C", "D", "H", "S"];
 const especiales = ["J", "Q", "K", "A"];
 
+let puntosJugador = 0;
+let puntosPC = 0;
+
+// Referencias del HTML
+// seleccionando a un elemento del DOM con el "id" igual a "btnPedir"
+const btnPedir = document.querySelector('#btnPedir');
+// seleccionando a todos los elementos del DOM con la etiqueta "small"
+const allSmalls = document.querySelectorAll('small');
+
 // Crear un nunevo Deck
 const crearDeck = () => {
   for (let i = 2; i <= 10; i++) {
@@ -56,7 +65,7 @@ const pedirCarta = () => {
   // tambien realiza esa accion
   let carta = deck.pop();
   console.log(deck);
-  console.log(carta);
+  // console.log(carta);
   // retnr la carta
   return carta;
 };
@@ -99,7 +108,7 @@ const valorCarta1 = ( carta ) => {
 
   console.log(puntos);
 
-}
+};
 
 // forma simplificada de la funcion que se encuentra en la parte superior
 const valorCarta = ( carta )=> {
@@ -107,8 +116,28 @@ const valorCarta = ( carta )=> {
   return ( isNaN(valor)  ) ?
          ( valor === 'A' ) ? 11 : 10
          : valor * 1;
-}
+};
 
-const valor = valorCarta( pedirCarta() );
-console.log({ valor });
+// const valor = valorCarta( pedirCarta() );
+// console.log({ valor });
+
+// EVENTOS
+// la funcion que se envia como argumento a nuestro metodo predeterminado del JS ".addEventListener"
+// es tambien conocido como callbck
+btnPedir.addEventListener('click', ( ) => {
+  const carta = pedirCarta();
+  console.log(carta);
+
+  puntosJugador = puntosJugador + valorCarta(carta);
+
+  console.log(puntosJugador);
+
+  // acumulando los puntos dentro del primer elemento del array "allSmalls"
+  // que en este caso corresponden a los puntajes del primer jugador
+  allSmalls[0].innerText = puntosJugador
+
+
+})
+
+
 
