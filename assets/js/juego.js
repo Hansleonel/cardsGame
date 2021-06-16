@@ -14,9 +14,17 @@ let puntosPC = 0;
 
 // Referencias del HTML
 // seleccionando a un elemento del DOM con el "id" igual a "btnPedir"
-const btnPedir = document.querySelector('#btnPedir');
+const btnPedir = document.querySelector("#btnPedir");
+// seleccionando a un elemento del DOM con el "id" igual a "btnStop"
+const btnStop = document.querySelector("#btnStop");
 // seleccionando a todos los elementos del DOM con la etiqueta "small"
-const allSmalls = document.querySelectorAll('small');
+const allSmalls = document.querySelectorAll("small");
+// referencia a la ubicacion donde crearemos un nuevo elemento en el DOM
+// por hacer referencia al nombre de un ID debemos de usar el character "#"
+const divCartasJugador = document.querySelector("#jugador-cartas");
+// referencia a la ubicacion donde crearemos un nuevo elemento en el DOM
+// en este caso para la PC
+const divCartasPC = document.querySelector("#computadora-cartas");
 
 // Crear un nunevo Deck
 const crearDeck = () => {
@@ -53,10 +61,10 @@ crearDeck();
 // funcion para tomar una carta
 
 const pedirCarta = () => {
-    if (deck.length === 0) {
+  if (deck.length === 0) {
     // el codigo que continue a "throw" no podra ejecutarse, en este caso a mens de que no cumpla
     // con el if condicionl
-    throw 'Error, no hay carts en el deck';
+    throw "Error, no hay carts en el deck";
   }
   // el metodo pop() prestablecido de JS nos permite extraer el ultimo elemento de un arreglo
   // dicho elemento se puede igualar a una variable en este caso a la variable "carta"
@@ -130,4 +138,70 @@ btnPedir.addEventListener("click", () => {
   // acumulando los puntos dentro del primer elemento del array "allSmalls"
   // que en este caso corresponden a los puntajes del primer jugador
   allSmalls[0].innerText = puntosJugador;
+
+  // creacion del elemento usando la ubicacion de la constante divCartasJugador
+  // devemos de crear el sigueinte elemento "<img class="carta" src="assets/carta/2C.png" >"
+  const imgCarta = document.createElement("img");
+  imgCarta.src = `assets/cartas/${carta}.png`;
+  imgCarta.classList.add("carta");
+
+  // insersion de elemento creado "imgCarta" dentro de la ubicacion creada como
+  // constante
+  divCartasJugador.append(imgCarta);
+
+  if (puntosJugador > 21) {
+    console.warn("error, el puntaje es mas de 21");
+    btnPedir.disabled = true;
+    btnStop.disabled = true;
+    // si el jugador tiene mas de 21 si o si es el turno de la computadora
+    turnoComputadora(puntosJugador);
+  } else if (puntosJugador === 21) {
+    console.warn("21, ganaste");
+    btnPedir.disabled = true;
+    btnStop.disabled = true;
+    // si el jugador tiene 21 puntos si o si es el turno de la computadora
+    turnoComputadora(puntosJugador);
+  }
 });
+
+btnStop.addEventListener("click", () => {
+  btnPedir.disabled = true;
+  btnStop.disabled = true;
+  turnoComputadora(puntosJugador);
+});
+
+// Turno computadora
+const turnoComputadora = (puntosMinimos) => {
+  do {
+    const carta = pedirCarta();
+
+    puntosPC = puntosPC + valorCarta(carta);
+    // insertando el valor de carta dentro de la segunda etiqueta small
+    allSmalls[1].innerText = puntosPC;
+
+    const imgCarta = document.createElement("img");
+    imgCarta.src = `assets/cartas/${carta}.png`;
+    imgCarta.classList.add("carta");
+    divCartasPC.append(imgCarta);
+
+    // si puntosMinimos es mayor a 21 solo necesitamos entrar una vez al "do"
+    if (puntosMinimos > 21) {
+      break;
+    }
+  } while ( (puntosPC < puntosMinimos) && (puntosMinimos <= 21) );
+
+  setTimeout(()=>{
+
+    if (puntosJugador === puntosPC) {
+      alert("empatads 1");
+    } else if (puntosMinimos > 21) {
+      alert("gana PC 2");
+    } else if (puntosPC > 21) {
+      alert("gana Jugador 3");
+    } else {
+      alert("gana PC 4");
+    }
+
+  }, 10 );
+
+};
