@@ -53,8 +53,7 @@ crearDeck();
 // funcion para tomar una carta
 
 const pedirCarta = () => {
-
-  if (deck.length === 0) {
+    if (deck.length === 0) {
     // el codigo que continue a "throw" no podra ejecutarse, en este caso a mens de que no cumpla
     // con el if condicionl
     throw 'Error, no hay carts en el deck';
@@ -73,7 +72,7 @@ const pedirCarta = () => {
 // pedirCarta();
 
 // funcion para obtener el valor de la carta
-const valorCarta1 = ( carta ) => {
+const valorCarta1 = (carta) => {
   // como sabemos debemos de manejar la variable "carta" recibida en el metodo
   // como un String, es por eso que podemos usar funciones predeterminadas en JS
   // como ".substring(posicionInicial, posicionFnl)"
@@ -94,8 +93,7 @@ const valorCarta1 = ( carta ) => {
     // recordemos que en este game las letras J,Q,K tienen el valor de 10
     // y el valor para la letra A es 11, es por eso que debemos de usar
     // la siguiente condicion
-    puntos = ( valor === 'A') ? 11 : 10;
-
+    puntos = valor === "A" ? 11 : 10;
   } else {
     console.log("si es un number");
     // como mencionamos previamente el valor de "valor"
@@ -107,15 +105,12 @@ const valorCarta1 = ( carta ) => {
   }
 
   console.log(puntos);
-
 };
 
 // forma simplificada de la funcion que se encuentra en la parte superior
-const valorCarta = ( carta )=> {
-  const valor = carta.substring(0, carta.length-1);
-  return ( isNaN(valor)  ) ?
-         ( valor === 'A' ) ? 11 : 10
-         : valor * 1;
+const valorCarta = (carta) => {
+  const valor = carta.substring(0, carta.length - 1);
+  return isNaN(valor) ? (valor === "A" ? 11 : 10) : valor * 1;
 };
 
 // const valor = valorCarta( pedirCarta() );
@@ -124,7 +119,7 @@ const valorCarta = ( carta )=> {
 // EVENTOS
 // la funcion que se envia como argumento a nuestro metodo predeterminado del JS ".addEventListener"
 // es tambien conocido como callbck
-btnPedir.addEventListener('click', ( ) => {
+btnPedir.addEventListener("click", () => {
   const carta = pedirCarta();
   console.log(carta);
 
@@ -134,10 +129,5 @@ btnPedir.addEventListener('click', ( ) => {
 
   // acumulando los puntos dentro del primer elemento del array "allSmalls"
   // que en este caso corresponden a los puntajes del primer jugador
-  allSmalls[0].innerText = puntosJugador
-
-
-})
-
-
-
+  allSmalls[0].innerText = puntosJugador;
+});
