@@ -17,6 +17,8 @@ let puntosPC = 0;
 const btnPedir = document.querySelector("#btnPedir");
 // seleccionando a un elemento del DOM con el "id" igual a "btnStop"
 const btnStop = document.querySelector("#btnStop");
+// seleccionando a un elemento del DOM con el "id" igual a "btnNew"
+const btnNew = document.querySelector("#btnNew");
 // seleccionando a todos los elementos del DOM con la etiqueta "small"
 const allSmalls = document.querySelectorAll("small");
 // referencia a la ubicacion donde crearemos un nuevo elemento en el DOM
@@ -170,6 +172,27 @@ btnStop.addEventListener("click", () => {
   turnoComputadora(puntosJugador);
 });
 
+btnNew.addEventListener("click", () => {
+
+  console.clear();
+
+  deck = [];
+  deck = crearDeck();
+
+  puntosJugador = 0;
+  puntosPC = 0;
+
+  allSmalls[0].innerText = 0;
+  allSmalls[1].innerText = 0;
+
+  divCartasJugador.innerHTML = '';
+  divCartasPC.innerHTML = '';
+
+  btnPedir.disabled = false;
+  btnStop.disabled = false;
+
+})
+
 // Turno computadora
 const turnoComputadora = (puntosMinimos) => {
   do {
@@ -188,9 +211,9 @@ const turnoComputadora = (puntosMinimos) => {
     if (puntosMinimos > 21) {
       break;
     }
-  } while ( (puntosPC < puntosMinimos) && (puntosMinimos <= 21) );
+  } while ((puntosPC < puntosMinimos) && (puntosMinimos <= 21));
 
-  setTimeout(()=>{
+  setTimeout(() => {
 
     if (puntosJugador === puntosPC) {
       alert("empatads 1");
@@ -202,6 +225,6 @@ const turnoComputadora = (puntosMinimos) => {
       alert("gana PC 4");
     }
 
-  }, 10 );
+  }, 100);
 
 };
